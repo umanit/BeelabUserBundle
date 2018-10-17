@@ -5,8 +5,7 @@ namespace Beelab\UserBundle\Controller;
 use Beelab\UserBundle\Event\FormEvent;
 use Beelab\UserBundle\Event\UserEvent;
 use Beelab\UserBundle\Manager\UserManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -24,8 +23,7 @@ class UserController extends AbstractController
     /**
      * Lists all User entities (with possible filter).
      *
-     * @Route("", name="user")
-     * @Method("GET")
+     * @Route("", name="user", methods={"GET"})
      */
     public function indexAction(EventDispatcherInterface $dispatcher, UserManagerInterface $manager, Request $request): Response
     {
@@ -40,7 +38,7 @@ class UserController extends AbstractController
         }
         $users = $manager->getList($request->query->get('page', 1), 20);
 
-        return $this->render('BeelabUserBundle:User:index.html.twig', [
+        return $this->render('@BeelabUser/User/index.html.twig', [
             'users' => $users,
             'form' => isset($form) ? $form->createView() : null,
         ]);
@@ -49,15 +47,14 @@ class UserController extends AbstractController
     /**
      * Finds and displays a User entity.
      *
-     * @Route("/{id}/show", name="user_show")
-     * @Method("GET")
+     * @Route("/{id}/show", name="user_show", methods={"GET"})
      */
     public function showAction($id, UserManagerInterface $manager): Response
     {
         $user = $manager->get($id);
         $deleteForm = $this->createDeleteForm($user->getId());
 
-        return $this->render('BeelabUserBundle:User:show.html.twig', [
+        return $this->render('@BeelabUser/User/show.html.twig', [
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
         ]);
@@ -66,8 +63,7 @@ class UserController extends AbstractController
     /**
      * Creates a new User entity.
      *
-     * @Route("/new", name="user_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="user_new", methods={"GET", "POST"})
      */
     public function newAction(UserManagerInterface $manager, Request $request): Response
     {
@@ -79,7 +75,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
-        return $this->render('BeelabUserBundle:User:new.html.twig',[
+        return $this->render('@BeelabUser/User/new.html.twig',[
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -88,8 +84,7 @@ class UserController extends AbstractController
     /**
      * Edits an existing User entity.
      *
-     * @Route("/{id}/edit", name="user_edit")
-     * @Method({"GET", "PUT"})
+     * @Route("/{id}/edit", name="user_edit", methods={"GET", "PUT"})
      */
     public function editAction($id, UserManagerInterface $manager, Request $request): Response
     {
@@ -102,7 +97,7 @@ class UserController extends AbstractController
         }
         $deleteForm = $this->createDeleteForm($user->getId());
 
-        return $this->render('BeelabUserBundle:User:edit.html.twig',[
+        return $this->render('@BeelabUser/User/edit.html.twig',[
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -112,8 +107,7 @@ class UserController extends AbstractController
     /**
      * Deletes a User entity.
      *
-     * @Route("/{id}/delete", name="user_delete")
-     * @Method("DELETE")
+     * @Route("/{id}/delete", name="user_delete", methods={"DELETE"})
      */
     public function deleteAction($id, UserManagerInterface $manager, Request $request): Response
     {
@@ -129,8 +123,7 @@ class UserController extends AbstractController
     /**
      * Change password.
      *
-     * @Route("/password", name="user_password")
-     * @Method({"GET", "POST"})
+     * @Route("/password", name="user_password", methods={"GET", "POST"})
      */
     public function passwordAction(EventDispatcherInterface $dispatcher, UserManagerInterface $manager, Request $request, ParameterBagInterface $bag): Response
     {
@@ -143,7 +136,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute($bag->get('beelab_user.route'));
         }
 
-        return $this->render('BeelabUserBundle:User:password.html.twig', [
+        return $this->render('@BeelabUser/User/password.html.twig', [
             'form' => $form->createView(),
         ]);
     }

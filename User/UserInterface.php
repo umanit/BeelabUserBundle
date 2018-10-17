@@ -2,12 +2,10 @@
 
 namespace Beelab\UserBundle\User;
 
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-
 /**
  * Interface used by UserManager and User entity.
  */
-interface UserInterface extends AdvancedUserInterface
+interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterface
 {
     /**
      * @return string

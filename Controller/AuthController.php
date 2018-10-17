@@ -3,8 +3,7 @@
 namespace Beelab\UserBundle\Controller;
 
 use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +17,7 @@ class AuthController extends AbstractController
     /**
      * Login form.
      *
-     * @Route("/login", name="login")
-     * @Method("GET")
+     * @Route("/login", name="login", methods={"GET"})
      *
      * @param AuthorizationCheckerInterface $checker
      * @param LoggerInterface               $logger
@@ -42,8 +40,7 @@ class AuthController extends AbstractController
     /**
      * Logout (implemented by Symfony security system).
      *
-     * @Route("/logout", name="logout")
-     * @Method("GET")
+     * @Route("/logout", name="logout", methods={"GET"})
      */
     public function logoutAction(): void
     {
@@ -53,8 +50,7 @@ class AuthController extends AbstractController
     /**
      * Login check (implemented by Symfony security system).
      *
-     * @Route("/login_check", name="login_check")
-     * @Method("POST")
+     * @Route("/login_check", name="login_check", methods={"POST"})
      */
     public function loginCheckAction(): void
     {
